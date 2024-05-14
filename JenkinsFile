@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                bat 'GenerateProjects.bat'
+                bat 'build.bat'
+                archiveArtifacts artifacts: 'bin/Debug/*', fingerprint: true
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running...'
+                bat 'RunApp.bat'
+            }
+        }
+    }
+}
